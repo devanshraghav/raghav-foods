@@ -2,8 +2,9 @@
   "name": "namaste-react-journey",
   "version": "1.0.0",
   "description": "This is namaste react journey. Whole course jounery will be added here.",
-  "main": "App.js",
   "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "jest"
   },
   "repository": {
