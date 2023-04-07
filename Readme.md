@@ -37,3 +37,20 @@ const RestaurantCard = (props) =>{
     </div>
   )
 }
+
+# Destructuring:
+<!-- <RestaurantCard resData = resturantDataList  key={restaurant.data.id} /> -->
+
+<!-- const RestaurantCard = (props) -->
+
+Now destructor all the data props to this variable
+   <!-- const { resData } = props; -->
+   Destructure from resData.data:
+   <!-- const {
+   cloudinaryImageId,
+   name,
+   cuisines,
+   avgRating,
+   costForTwo,
+   deliveryTime,
+ } = resData?.data; -->
