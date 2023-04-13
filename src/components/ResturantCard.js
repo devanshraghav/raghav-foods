@@ -5,8 +5,7 @@ import { Image_CDN_Url } from "../constants";
 // so, that we can re-use it.
 
 const RestaurantCard = ({name,cuisines,avgRating,costForTwo,deliveryTime,cloudinaryImageId}) => {
-  // destructring on the fly.
-  
+  // destructre on the fly
   return (
     <div className="restaurant-card">
       <img
