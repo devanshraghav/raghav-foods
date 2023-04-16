@@ -37,14 +37,11 @@
 
 
 .restaurant-container{
-  background: yellow;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     flex-wrap: wrap;
     /* margin: 10px; */
 }
-
-
 
 .restaurant-card{
     padding: 10px;
@@ -62,4 +59,11 @@
 .restaurant-card:hover{
   border:1px solid purple;
   cursor: pointer;
+}
+
+.shimmer-card{
+  width: 200px;
+  height: 200px;
+  background: lightgray;
+  margin: 20px;
 }
