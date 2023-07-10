@@ -1,23 +1,36 @@
 import { Image_CDN_Url } from "../constants";
 
-// Since we will be needing many restro cards
-// therefore we will create a separate component for that.
-// so, that we can re-use it.
-
-const RestaurantCard = ({name,cuisines,avgRating,costForTwo,deliveryTime,cloudinaryImageId}) => {
+const RestaurantCard = ({
+  name,
+  cuisines,
+  avgRating,
+  costForTwoString,
+  deliveryTime,
+  cloudinaryImageId,
+  aggregatedDiscountInfo
+}) => {
   // destructre on the fly
   return (
-    <div className="restaurant-card">
+    <div className="p-4 m-4 hover:shadow-lg">
       <img
-        className="restaurant-image"
         alt="restro-card"
         src={Image_CDN_Url + cloudinaryImageId}
       />
-      <h3>{name}</h3>
-      <h4>{cuisines.join(", ")}</h4>  
-      <h4>{avgRating}⭐</h4>
-      <h4>{costForTwo / 100}</h4>
-      <h4>{deliveryTime} min</h4>
+      <h2 className="pt-2 font-semibold text-md">{name}</h2>
+      <h4 className="text-gray-500 pt-2 text-sm">{cuisines.join(", ")}</h4>
+      <div className="flex justify-between py-4 items-center text-gray-500 border-b-2">
+        {avgRating && avgRating >= 4 ? (
+          <div className="bg-green-600 text-white">{avgRating}</div>
+        ) : (
+          <div className="bg-orange-400">{avgRating}</div>
+        )}
+        <div>.</div>
+        <h4 className="text-gray-500 pt-2 text-sm">{deliveryTime} min</h4>
+
+        <div>.</div>
+        <h4 className="text-sm">{costForTwoString}</h4>
+      </div>
+      {/* <h2 className="pt-2 text-amber-900 text-sm font-bold text-center">{aggregatedDiscountInfo?.header}</h2> */}
     </div>
   );
 };

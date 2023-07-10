@@ -2,3 +2,5 @@
 
 /dist
 .parcel-cache
+
+tailwind.config.js
