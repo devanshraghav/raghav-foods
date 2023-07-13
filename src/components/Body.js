@@ -2,13 +2,10 @@ import RestaurantCard from "./ResturantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import { filterData } from "../utils/helper";
-// import useGetAllRestaurant from "../utils/useGetAllRestaurant";
-// import useGetFilterRestaurant from "../utils/useGetFilterRestaurant";
 
 // Context
 import { useContext } from "react";
-import UserContext from "../utils/userContext";
+import UserContext from "../utils/Context/UserContext";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
@@ -149,10 +146,9 @@ const Body = () => {
             allRestaurants.map((restaurant) => {
               return (
                 <Link
-                  className="flex lg:w-1/4 md:4/12 max-w-xs"
+                  className="lg:w-1/4 md:4/12 max-w-xs"
                   key={restaurant.data.id}
-                  to={`/restaurant/${restaurant.data.id}`
-                }
+                  to={`/restaurant/${restaurant.data.id}`}
                 >
                   <RestaurantCard {...restaurant.data} />
                 </Link>
