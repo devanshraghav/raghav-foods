@@ -1,20 +1,22 @@
 import RestaurantCard from "./ResturantCard";
 import { useState, useEffect } from "react";
-import Shimmer from "./Shimmer";
+import RestaurantShimmer from "../Shimmer/RestaurantShimmer"
 import { Link } from "react-router-dom";
+import ResShimmer from "../Shimmer/ResShimmer";
 
 // Context
 import { useContext } from "react";
 import UserContext from "../utils/Context/UserContext";
+import ResShimmer from "../Shimmer/ResShimmer";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [allRestaurants, setAllRestaurant] = useState([]);
   const [filterRestaurants, setFilterRestaurants] = useState([]);
-
   const [openRestaurant, setOpenRestaurant] = useState();
   const [sortBy, setSortBy] = useState("RELEVANCE");
   const [offset, setOffset] = useState(0);
+  const [showloading ,setShowLoading] = useState(true);
 
   const { user, setUser } = useContext(UserContext);
 
@@ -37,6 +39,7 @@ const Body = () => {
       setFilterRestaurants(restaurantData);
     } else {
       // Fetching will be different for infinite scrolling:
+
       let FETCH_MORE_RESTAURANT_DATA_URL = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.351793&lng=78.0095493&offset=${offset}&sortBy=${sortBy}&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING`;
       try {
         const data = await fetch(FETCH_MORE_RESTAURANT_DATA_URL);
@@ -46,13 +49,15 @@ const Body = () => {
           const restaurantData = cardArray.map((card) => card?.data);
           // adding new data to existing state
           setAllRestaurant((prev) => prev.concat(restaurantData));
+          // or
+          // setAllRestaurant((prev) => [...prev, ...restaurantData]);
         }
       } catch (error) {
         console.log(error);
       }
 
-      // setFilterRestaurants(restaurantData);
     }
+    setShowLoading(false);
   }
 
   async function handleScrolling() {
@@ -60,6 +65,7 @@ const Body = () => {
       window.innerHeight + document.documentElement.scrollTop + 1 >=
       document.documentElement.scrollHeight
     ) {
+      setShowLoading(true);
       setOffset((prev) => prev + 16);
     }
   }
@@ -80,7 +86,7 @@ const Body = () => {
   }
 
   return allRestaurants.length === 0 ? (
-    <Shimmer />
+    <RestaurantShimmer />
   ) : (
     <div className="px-8 2xl:px-60 mt-4 2xl:m-16">
       <div className="p-4 my-5 border-b-2 flex justify-between h-12 items-center bg-white sticky top-0">
@@ -154,8 +160,10 @@ const Body = () => {
                 </Link>
               );
             })
+            
           )
         }
+        {showloading && <ResShimmer />}
       </div>
     </div>
   );

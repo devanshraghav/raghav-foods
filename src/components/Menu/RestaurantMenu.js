@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Shimmer from "../Shimmer";
 import { useParams } from "react-router-dom";
 import MenuType from "./MenuType";
+import RestaurantMenuShimmer from "../../Shimmer/RestaurantMenuShimmer";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
@@ -11,7 +11,7 @@ const RestaurantMenu = () => {
   useEffect(() => {
     getRestaurantMenu();
   }, []);
-
+  
   async function getRestaurantMenu() {
     const data = await fetch(
       `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=30.351793&lng=78.0095493&restaurantId=${resId}&submitAction=ENTER`
@@ -29,7 +29,7 @@ const RestaurantMenu = () => {
   // dispatch(addMenu({restaurantMenu,restaurantInfo}));
 
   return !restaurantInfo ? (
-    <Shimmer />
+    <RestaurantMenuShimmer />
   ) : (
     <div className="container max-w-4xl mx-auto px-4 md:w-1/2 lg:w-4/6 mt-4">
       <div className="flex justify-between mb-4">
