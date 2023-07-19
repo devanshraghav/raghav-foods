@@ -1,9 +1,9 @@
 import RestaurantCard from "./ResturantCard";
 import { useState, useEffect } from "react";
-import RestaurantShimmer from "../Shimmer/RestaurantShimmer"
+import RestaurantShimmer from "../Shimmer/RestaurantShimmer";
 import { Link } from "react-router-dom";
 import ResShimmer from "../Shimmer/ResShimmer";
-
+import { BiSearchAlt } from "react-icons/bi";
 // Context
 import { useContext } from "react";
 import UserContext from "../utils/Context/UserContext";
@@ -16,7 +16,7 @@ const Body = () => {
   const [openRestaurant, setOpenRestaurant] = useState();
   const [sortBy, setSortBy] = useState("RELEVANCE");
   const [offset, setOffset] = useState(0);
-  const [showloading ,setShowLoading] = useState(true);
+  const [showloading, setShowLoading] = useState(true);
 
   const { user, setUser } = useContext(UserContext);
 
@@ -49,16 +49,27 @@ const Body = () => {
           const restaurantData = cardArray.map((card) => card?.data);
           // adding new data to existing state
           setAllRestaurant((prev) => prev.concat(restaurantData));
+          setFilterRestaurants(allRestaurants);
           // or
           // setAllRestaurant((prev) => [...prev, ...restaurantData]);
         }
       } catch (error) {
         console.log(error);
       }
-
     }
     setShowLoading(false);
   }
+
+  const fitlerRestaurantData = () => {
+    if (searchText.length === 0) {
+      setFilterRestaurants(allRestaurants);
+    } else {
+      const filteredData = allRestaurants.filter((item) =>
+        item?.data?.name.toUpperCase().includes(searchText.toUpperCase())
+      );
+      setFilterRestaurants(filteredData);
+    }
+  };
 
   async function handleScrolling() {
     if (
@@ -88,71 +99,91 @@ const Body = () => {
   return allRestaurants.length === 0 ? (
     <RestaurantShimmer />
   ) : (
-    <div className="px-8 2xl:px-60 mt-4 2xl:m-16">
-      <div className="p-4 my-5 border-b-2 flex justify-between h-12 items-center bg-white sticky top-0">
-        <h1 className="font-bold text-xl">{openRestaurant} Restaurants</h1>
-        <ul className="hidden md:flex justify-between text-gray-500">
-          <li
-            className={`px-3 cursor-pointer ${
-              sortBy === "RELEVANCE"
-                ? "text-black underline"
-                : "hover:text-black"
-            }`}
-            onClick={() => updateSortByFeature("RELEVANCE")}
-          >
-            Relevance
+    <div className="md:px-8 2xl:px-60 mt-4 2xl:m-16">
+      <div className="md:p-4 my-5 border-b-2 md:text-sm md:flex justify-between md:h-12 items-center bg-white md:sticky top-0">
+        <h1 className="text-center font-bold text-xl">{openRestaurant} Restaurants</h1>
+        <ul className="md:flex justify-between text-gray-500">
+          <li className="flex p-4 gap-4">
+            <input
+              type="text"
+              className="bg-gray-200 text-black rounded-sm"
+              placeholder="Search"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button
+              className="flex items-center gap-2"
+              onClick={() => fitlerRestaurantData()}
+            >
+              <BiSearchAlt className="text-xl" />
+              Search
+            </button>
           </li>
-          <li
-            className={`px-3 cursor-pointer ${
-              sortBy === "DELIVERY_TIME"
-                ? "text-black underline"
-                : "hover:text-black"
-            }`}
-            onClick={() => updateSortByFeature("DELIVERY_TIME")}
-          >
-            Delivery Time
-          </li>
-          <li
-            className={`px-3 cursor-pointer ${
-              sortBy === "RATING" ? "text-black underline" : "hover:text-black"
-            }`}
-            onClick={() => updateSortByFeature("RATING")}
-          >
-            Rating
-          </li>
-          <li
-            className={`px-3 cursor-pointer ${
-              sortBy === "COST_FOR_TWO"
-                ? "text-black underline"
-                : "hover:text-black"
-            }`}
-            onClick={() => updateSortByFeature("COST_FOR_TWO")}
-          >
-            Cost:Low to High
-          </li>
-          <li
-            className={`px-3 cursor-pointer ${
-              sortBy === "COST_FOR_TWO_H2L"
-                ? "text-black underline"
-                : "hover:text-black"
-            }`}
-            onClick={() => updateSortByFeature("COST_FOR_TWO_H2L")}
-          >
-            Cost:High to Low
-          </li>
+          <div className="flex lg:text-md text-sm p-1 gap-3 w-full items-center">
+            <li
+              className={`lg:px-3 cursor-pointer ${
+                sortBy === "RELEVANCE"
+                  ? "text-black underline"
+                  : "hover:text-black"
+              }`}
+              onClick={() => updateSortByFeature("RELEVANCE")}
+            >
+              Relevance
+            </li>
+            <li
+              className={`lg:px-3 cursor-pointer ${
+                sortBy === "DELIVERY_TIME"
+                  ? "text-black underline"
+                  : "hover:text-black"
+              }`}
+              onClick={() => updateSortByFeature("DELIVERY_TIME")}
+            >
+              Delivery Time
+            </li>
+            <li
+              className={`lg:px-3 cursor-pointer ${
+                sortBy === "RATING"
+                  ? "text-black underline"
+                  : "hover:text-black"
+              }`}
+              onClick={() => updateSortByFeature("RATING")}
+            >
+              Rating
+            </li>
+            <li
+              className={`lg:px-3 cursor-pointer ${
+                sortBy === "COST_FOR_TWO"
+                  ? "text-black underline"
+                  : "hover:text-black"
+              }`}
+              onClick={() => updateSortByFeature("COST_FOR_TWO")}
+            >
+              Cost:Low to High
+            </li>
+            <li
+              className={`lg:px-3 cursor-pointer ${
+                sortBy === "COST_FOR_TWO_H2L"
+                  ? "text-black underline"
+                  : "hover:text-black"
+              }`}
+              onClick={() => updateSortByFeature("COST_FOR_TWO_H2L")}
+            >
+              Cost:High to Low
+            </li>
+          </div>
         </ul>
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap justify-around">
         {
           // now lets map the array and get all the restaurants:
           // conditional rendering
           allRestaurants.length === 0 ? (
             <h1>No restaurant</h1>
           ) : (
-            allRestaurants.map((restaurant) => {
+            filterRestaurants.map((restaurant) => {
               return (
                 <Link
-                  className="lg:w-1/4 md:4/12 max-w-xs"
+                  className="min-[1440px]:w-1/4  max-w-xs"
                   key={restaurant.data.id}
                   to={`/restaurant/${restaurant.data.id}`}
                 >
@@ -160,7 +191,6 @@ const Body = () => {
                 </Link>
               );
             })
-            
           )
         }
         {showloading && <ResShimmer />}

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { additem, removeItem , incrementQuantity, decrementQuantity } from "../../utils/Redux/cartSlice";
+import {
+  additem,
+  removeItem,
+  incrementQuantity,
+  decrementQuantity,
+} from "../../utils/Redux/cartSlice";
 import { useSelector } from "react-redux";
 
 const ItemQuantityButton = ({ data }) => {
@@ -15,16 +20,12 @@ const ItemQuantityButton = ({ data }) => {
     };
     dispatch(additem({ newItem, quantity }));
   };
-  const reduceFoodItem = (data, quantity) => {
-    dispatch(removeItem({ data, quantity }));
-  };
-
-  const increment = (data,quantity) =>{
+  const increment = (data, quantity) => {
     dispatch(incrementQuantity(data));
-  }
-  const decrement = (data,quantity) =>{
+  };
+  const decrement = (data, quantity) => {
     dispatch(decrementQuantity(data));
-  }
+  };
 
   const cartItems = useSelector((store) => store.cart.items);
 

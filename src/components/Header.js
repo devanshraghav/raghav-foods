@@ -15,38 +15,37 @@ const Header = () => {
   const length = cartItems.reduce((total, item) => (total += item.quantity), 0);
 
   return (
-    <div className="flex justify-between bg-pink-50 shadow-lg">
+    <div className="flex justify-around shadow-md md:text-lg">
       <a href="/">
         <img className="h-28 p-2" src={Logo} />
       </a>
-      <h1 className="py-10">{isOnline ? "🟢" : "🔴"}</h1>
       <div>
-        <ul className="flex py-10">
-          <li className="px-2">
-            <Link to="/">Home</Link>
-          </li>
+        <ul className="flex py-10 md:gap-6">
           <li className="px-2">
             <Link to="/about">About</Link>
           </li>
+
           <li className="px-2">
-            <Link to="/contact">Contact Us</Link>
+            <Link to="/cart">Cart - {length}</Link>
           </li>
-          {/* <li className="px-2">
-            <Link to="/instamart">Instamart</Link>
-          </li> */}
-          <Link to="/cart">
-            <li className="px-2">Cart - {length} items</li>
-          </Link>
+          {isLoggedIn ? (
+        <>
+          <span className="hidden md:block">{user.name}</span>{" "}
+          <button onClick={() => setIsLoggedIn(false)}>Logout</button>
+        </>
+      ) : (
+        <button onClick={() => setIsLoggedIn(true)}>Login</button>
+      )}
         </ul>
       </div>
-      {isLoggedIn ? (
+      {/* {isLoggedIn ? (
         <>
           <span className="py-10">{user.name}</span>{" "}
           <button onClick={() => setIsLoggedIn(false)}>Logout</button>
         </>
       ) : (
         <button onClick={() => setIsLoggedIn(true)}>Login</button>
-      )}
+      )} */}
     </div>
   );
 };
