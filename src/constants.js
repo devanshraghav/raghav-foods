@@ -1912,3 +1912,6 @@ export const resturantDataList = [
     subtype: "basic",
   },
 ];
+
+// Razor Pay Key
+export const razorPayKey = "rzp_test_eD6EQRNK5uLo6Q";
