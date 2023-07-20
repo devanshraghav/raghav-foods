@@ -3,7 +3,7 @@
 export const Image_CDN_Url =
   "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
 
-
+export const EMPTY_CART_URL= "https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-5521508-4610092.png";
 // lets get an API data from swiggy for resturant cards:
 // Since we will get that data in json -> we will change it into object.
 

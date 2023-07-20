@@ -1,7 +1,7 @@
-import { incrementQuantity, decrementQuantity } from "../utils/Redux/cartSlice";
+import { incrementQuantity, decrementQuantity } from "../../utils/Redux/cartSlice";
 import { useDispatch } from "react-redux";
 
-import { Image_CDN_Url } from "../constants";
+import { Image_CDN_Url } from "../../constants";
 
 const CartCard = ({ data }) => {
   const dispatch = useDispatch();
