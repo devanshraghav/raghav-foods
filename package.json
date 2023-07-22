@@ -2,9 +2,6 @@
   "name": "raghav-foods",
   "version": "1.0.0",
   "description": "This project will be made during the learning sessions from namaste-react course",
-  "engines": {
-    "node": "16.15.1"
-  },
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
