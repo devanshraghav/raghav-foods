@@ -22,7 +22,7 @@ const makePayment = Payment();
         <EmptyCart />
       ) : (
         <>
-          <div className="shadow-md mt-4 container mx-auto md:px-4 py-4 md:w-2/3">
+          <div className="shadow-md mt-4 container mx-auto md:px-4 py-4 md:w-2/3 md:mb-10">
             <h1 className="font-bold text-2xl">Restaurant Name</h1>
 
             <div className="flex justify-between mt-3 px-1">

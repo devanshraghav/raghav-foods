@@ -1,7 +1,7 @@
 {
-  "name": "namaste-react-journey",
+  "name": "raghav-foods",
   "version": "1.0.0",
-  "description": "This is namaste react journey. Whole course jounery will be added here.",
+  "description": "This project will be made during the learning sessions from namaste-react course",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devanshraghav/react-code-daywise.git"
+    "url": "git+https://github.com/devanshraghav/raghav-foods.git"
   },
   "keywords": [
     "react",

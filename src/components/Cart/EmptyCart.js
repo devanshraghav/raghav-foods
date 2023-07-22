@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const EmptyCart = () => {
     const navigate = useNavigate();
   return (
-    <div className="md:w-1/2 mx-auto">
+    <div className="md:w-1/2 mx-auto h-[100vh]">
       <img className="mx-auto" src={EMPTY_CART_URL} />
       <div className="flex flex-col justify-center items-center gap-2">
         <div className="flex flex-col gap-0">

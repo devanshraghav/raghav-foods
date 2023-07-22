@@ -48,10 +48,10 @@ const Body = () => {
         if (cardArray != undefined) {
           const restaurantData = cardArray.map((card) => card?.data);
           // adding new data to existing state
-          setAllRestaurant((prev) => prev.concat(restaurantData));
+          // setAllRestaurant((prev) => prev.concat(restaurantData));
+          setAllRestaurant((prev) => [...prev, ...restaurantData]);
           setFilterRestaurants(allRestaurants);
           // or
-          // setAllRestaurant((prev) => [...prev, ...restaurantData]);
         }
       } catch (error) {
         console.log(error);
@@ -183,7 +183,7 @@ const Body = () => {
             filterRestaurants.map((restaurant) => {
               return (
                 <Link
-                  className="min-[1440px]:w-1/4  max-w-xs"
+                  className="min-[1440px]:w-1/4 max-w-xs"
                   key={restaurant.data.id}
                   to={`/restaurant/${restaurant.data.id}`}
                 >
