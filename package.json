@@ -18,10 +18,11 @@
   "author": "Devansh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/devanshraghav/react-code-daywise/issues"
+    "url": "https://github.com/devanshraghav/raghav-foods/issues"
   },
-  "homepage": "https://github.com/devanshraghav/react-code-daywise#readme",
+  "homepage": "https://github.com/devanshraghav/raghav-foods#readme",
   "devDependencies": {
+    "@babel/core": "^7.22.9",
     "parcel": "^2.8.3",
     "postcss": "^8.4.23",
     "process": "^0.11.10",

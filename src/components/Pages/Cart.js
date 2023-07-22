@@ -4,7 +4,6 @@ import { clearCart } from "../../utils/Redux/cartSlice";
 import CartCard from "../Cart/CartCard";
 import { BsArrowRightSquareFill } from "react-icons/bs";
 import EmptyCart from "../Cart/EmptyCart";
-import { useDispatch } from "react-redux";
 import Payment from "../Payment/Payment";
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);

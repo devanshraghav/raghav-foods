@@ -7,7 +7,6 @@ import { BiSearchAlt } from "react-icons/bi";
 // Context
 import { useContext } from "react";
 import UserContext from "../utils/Context/UserContext";
-import ResShimmer from "../Shimmer/ResShimmer";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
