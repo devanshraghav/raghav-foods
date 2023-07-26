@@ -2,7 +2,7 @@ import ResShimmer from "./ResShimmer";
 
 const RestaurantShimmer = () => {
   return (
-    <div className="m-8 flex flex-wrap">
+    <div className="m-8 flex flex-wrap" data-testid="shimmer">
       {/* creating random array */}
       {Array(10)
         .fill("")

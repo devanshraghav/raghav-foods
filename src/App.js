@@ -17,7 +17,6 @@ import UserContext from "./utils/Context/UserContext";
 import { Provider } from "react-redux";
 import store from "./utils/Redux/store";
 import Cart from "./components/Pages/Cart";
-import RestaurantShimmer from "./Shimmer/RestaurantShimmer";
 
 const About = lazy(() => import("./components/Pages/About"));
 const AppLayout = () => {

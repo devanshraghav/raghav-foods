@@ -100,7 +100,9 @@ const Body = () => {
   ) : (
     <div className="md:px-8 2xl:px-60 mt-4 2xl:m-16">
       <div className="md:p-4 my-5 border-b-2 md:text-sm md:flex justify-between md:h-12 items-center bg-white md:sticky top-0">
-        <h1 className="text-center font-bold text-xl">{openRestaurant} Restaurants</h1>
+        <h1 className="text-center font-bold text-xl">
+          {openRestaurant} Restaurants
+        </h1>
         <ul className="md:flex justify-between text-gray-500">
           <li className="flex p-4 gap-4">
             <input
@@ -111,6 +113,7 @@ const Body = () => {
               onChange={(e) => setSearchText(e.target.value)}
             />
             <button
+              data-testid="search-btn"
               className="flex items-center gap-2"
               onClick={() => fitlerRestaurantData()}
             >
