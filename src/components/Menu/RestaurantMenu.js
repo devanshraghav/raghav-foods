@@ -14,7 +14,7 @@ const RestaurantMenu = () => {
   
   async function getRestaurantMenu() {
     const data = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=30.351793&lng=78.0095493&restaurantId=${resId}&submitAction=ENTER`
+      `https://corsproxy.io/?https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=30.351793&lng=78.0095493&restaurantId=${resId}&submitAction=ENTER`
     );
     const json = await data.json();
     const menus = json?.data?.cards?.find((card) => card.groupedCard)

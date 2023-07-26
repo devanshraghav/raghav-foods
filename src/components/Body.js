@@ -26,7 +26,7 @@ const Body = () => {
   async function getAllRestaurant() {
     if (offset === 0) {
       const data = await fetch(
-        `https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.351793&lng=78.0095493&sortBy=${sortBy}&page_type=DESKTOP_WEB_LISTING`
+        `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.351793&lng=78.0095493&sortBy=${sortBy}&page_type=DESKTOP_WEB_LISTING`
       );
       const json = await data.json();
       const cardArray = json?.data?.cards?.find(
@@ -39,7 +39,7 @@ const Body = () => {
     } else {
       // Fetching will be different for infinite scrolling:
 
-      let FETCH_MORE_RESTAURANT_DATA_URL = `https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.351793&lng=78.0095493&offset=${offset}&sortBy=${sortBy}&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING`;
+      let FETCH_MORE_RESTAURANT_DATA_URL = `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.351793&lng=78.0095493&offset=${offset}&sortBy=${sortBy}&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING`;
       try {
         const data = await fetch(FETCH_MORE_RESTAURANT_DATA_URL);
         const json = await data.json();
