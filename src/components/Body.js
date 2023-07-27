@@ -109,6 +109,7 @@ const Body = () => {
               type="text"
               className="bg-gray-200 text-black rounded-sm"
               placeholder="Search"
+              data-testid="search-input"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
@@ -175,7 +176,7 @@ const Body = () => {
           </div>
         </ul>
       </div>
-      <div className="flex flex-wrap justify-around">
+      <div className="flex flex-wrap justify-around" data-testid="res-list">
         {
           // now lets map the array and get all the restaurants:
           // conditional rendering
