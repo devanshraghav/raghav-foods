@@ -4,10 +4,10 @@ const RestaurantCard = ({
   name,
   cuisines,
   avgRating,
-  costForTwoString,
+  costForTwo,
   deliveryTime,
+  sla,
   cloudinaryImageId,
-  aggregatedDiscountInfo,
 }) => {
   // destructre on the fly
   return (
@@ -46,10 +46,10 @@ const RestaurantCard = ({
           </div>
         )}
         <div>.</div>
-        <h4>{deliveryTime} min</h4>
+        <h4>{sla.deliveryTime} min</h4>
 
         <div>.</div>
-        <h4>{costForTwoString}</h4>
+        <h4>{costForTwo}</h4>
       </div>
     </div>
   );

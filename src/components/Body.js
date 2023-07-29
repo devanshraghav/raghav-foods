@@ -29,11 +29,12 @@ const Body = () => {
         `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.351793&lng=78.0095493&sortBy=${sortBy}&page_type=DESKTOP_WEB_LISTING`
       );
       const json = await data.json();
-      const cardArray = json?.data?.cards?.find(
-        (item) => item.cardType === "seeAllRestaurants"
-      );
-      const restaurantData = cardArray?.data?.data?.cards;
-      setOpenRestaurant(cardArray?.data?.data?.totalOpenRestaurants);
+      // const cardArray = json?.data?.cards?.find(
+      //   (item) => item.cardType === "seeAllRestaurants"
+      // );
+      // const restaurantData = cardArray?.data?.data?.cards;
+      const restaurantData = json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle.restaurants;
+      setOpenRestaurant(json.data?.cards[2]?.card?.card?.restaurantCount);
       setAllRestaurant(restaurantData);
       setFilterRestaurants(restaurantData);
     } else {
@@ -44,6 +45,7 @@ const Body = () => {
         const data = await fetch(FETCH_MORE_RESTAURANT_DATA_URL);
         const json = await data.json();
         const cardArray = json?.data?.cards;
+        console.log(cardArray);
         if (cardArray != undefined) {
           const restaurantData = cardArray.map((card) => card?.data);
           // adding new data to existing state
@@ -187,10 +189,11 @@ const Body = () => {
               return (
                 <Link
                   className="min-[1440px]:w-1/4 max-w-xs"
-                  key={restaurant.data.id}
-                  to={`/restaurant/${restaurant.data.id}`}
+                  key={restaurant.info.id}
+                  to={`/restaurant/${restaurant.info.id}`}
                 >
-                  <RestaurantCard {...restaurant.data} />
+                                    
+                  <RestaurantCard {...restaurant.info} />
                 </Link>
               );
             })
