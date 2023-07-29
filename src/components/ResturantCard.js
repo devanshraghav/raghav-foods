@@ -5,7 +5,6 @@ const RestaurantCard = ({
   cuisines,
   avgRating,
   costForTwo,
-  deliveryTime,
   sla,
   cloudinaryImageId,
 }) => {

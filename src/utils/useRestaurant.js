@@ -1,21 +1,48 @@
 import { useState , useEffect } from "react";
 
-const useRestaurant = (resId) => {
-  const [restaurantMenu, setRestaurantMenu] = useState(null);
+const useRestaurant = (API_URL) =>{
+  const [allRestaurants, setAllRestaurant] = useState([]);
+  const [filterRestaurants, setFilterRestaurants] = useState([]);
+  const [openRestaurant, setOpenRestaurant] = useState();
 
   useEffect(() => {
-    getRestaurantMenu();
+    getAllRestaurant();
   }, []);
 
-  async function getRestaurantMenu() {
-    const data = await fetch(
-      `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=30.351793&lng=78.0095493&restaurantId=${resId}&submitAction=ENTER`
-    );
-    const json = await data.json();
-    setRestaurantMenu(json?.data?.cards[0]?.card?.card?.info);
+  async function getAllRestaurant() {
+    try {
+      const data = await fetch(API_URL);
+      // if response is not ok then throw new Error
+      if (!data.ok) {
+        const err = data.status;
+        throw new Error(err);
+      } else {
+        const json = await data.json();
+        async function checkJsonData(json) {
+          for (let i = 0; i < json?.data?.cards.length; i++) {
+            const restaurantData =
+              json?.data?.cards[i]?.card?.card?.gridElements?.infoWithStyle
+                .restaurants;
+
+            if (restaurantData !== undefined) {
+              setOpenRestaurant(
+                json.data?.cards[i]?.card?.card?.restaurantCount
+              );
+              return restaurantData;
+            }
+          }
+        }
+        const restaurant = await checkJsonData(json);
+
+        setAllRestaurant(restaurant);
+        setFilterRestaurants(restaurant);
+      }
+    } catch (error) {
+      console.error(error); // show error in console
+    }
   }
 
-  return restaurantMenu;
-};
+  return [allRestaurants,filterRestaurants,openRestaurant];
+}
 
 export default useRestaurant;

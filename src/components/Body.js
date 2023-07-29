@@ -1,3 +1,4 @@
+import { API_URL } from "../constants";
 import RestaurantCard from "./ResturantCard";
 import { useState, useEffect } from "react";
 import RestaurantShimmer from "../Shimmer/RestaurantShimmer";
@@ -7,96 +8,59 @@ import { BiSearchAlt } from "react-icons/bi";
 // Context
 import { useContext } from "react";
 import UserContext from "../utils/Context/UserContext";
+import useRestaurant from "../utils/useRestaurant";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
-  const [allRestaurants, setAllRestaurant] = useState([]);
-  const [filterRestaurants, setFilterRestaurants] = useState([]);
-  const [openRestaurant, setOpenRestaurant] = useState();
+
   const [sortBy, setSortBy] = useState("RELEVANCE");
   const [offset, setOffset] = useState(0);
-  const [showloading, setShowLoading] = useState(true);
+  // const [showloading, setShowLoading] = useState(true);
+  const [filterRestaurants, setFilterRestaurants] = useState(null);
 
   const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    getAllRestaurant();
-  }, [sortBy, offset]);
-
-  async function getAllRestaurant() {
-    if (offset === 0) {
-      const data = await fetch(
-        `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.351793&lng=78.0095493&sortBy=${sortBy}&page_type=DESKTOP_WEB_LISTING`
-      );
-      const json = await data.json();
-      // const cardArray = json?.data?.cards?.find(
-      //   (item) => item.cardType === "seeAllRestaurants"
-      // );
-      // const restaurantData = cardArray?.data?.data?.cards;
-      const restaurantData = json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle.restaurants;
-      setOpenRestaurant(json.data?.cards[2]?.card?.card?.restaurantCount);
-      setAllRestaurant(restaurantData);
-      setFilterRestaurants(restaurantData);
-    } else {
-      // Fetching will be different for infinite scrolling:
-
-      let FETCH_MORE_RESTAURANT_DATA_URL = `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.351793&lng=78.0095493&offset=${offset}&sortBy=${sortBy}&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING`;
-      try {
-        const data = await fetch(FETCH_MORE_RESTAURANT_DATA_URL);
-        const json = await data.json();
-        const cardArray = json?.data?.cards;
-        console.log(cardArray);
-        if (cardArray != undefined) {
-          const restaurantData = cardArray.map((card) => card?.data);
-          // adding new data to existing state
-          // setAllRestaurant((prev) => prev.concat(restaurantData));
-          setAllRestaurant((prev) => [...prev, ...restaurantData]);
-          setFilterRestaurants(allRestaurants);
-          // or
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    setShowLoading(false);
-  }
+  const [allRestaurants, filterRestaurant, openRestaurant] =
+    useRestaurant(API_URL);
 
   const fitlerRestaurantData = () => {
     if (searchText.length === 0) {
       setFilterRestaurants(allRestaurants);
     } else {
-      const filteredData = allRestaurants.filter((item) =>
-        item?.data?.name.toUpperCase().includes(searchText.toUpperCase())
+      const filteredData = filterRestaurant.filter((item) =>
+        item?.info?.name.toUpperCase().includes(searchText.toUpperCase())
       );
       setFilterRestaurants(filteredData);
     }
   };
 
-  async function handleScrolling() {
-    if (
-      window.innerHeight + document.documentElement.scrollTop + 1 >=
-      document.documentElement.scrollHeight
-    ) {
-      setShowLoading(true);
-      setOffset((prev) => prev + 16);
-    }
-  }
+  // async function handleScrolling() {
+  //   if (
+  //     window.innerHeight + document.documentElement.scrollTop + 1 >=
+  //     document.documentElement.scrollHeight
+  //   ) {
+  //     setShowLoading(true);
+  //     setOffset((prev) => prev + 16);
+  //   }
+  // }
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScrolling);
-    return () => window.removeEventListener("scroll", handleScrolling);
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScrolling);
+  //   return () => window.removeEventListener("scroll", handleScrolling);
+  // }, []);
 
-  const updateSortByFeature = (type) => {
-    setAllRestaurant([]);
-    setSortBy(type);
-    setOffset(0);
-  };
+  // const updateSortByFeature = (type) => {
+  //   setAllRestaurant([]);
+  //   setSortBy(type);
+  //   setOffset(0);
+  // };
+
   // Early return to handle rejection
-  if (!allRestaurants) {
-    return null;
+  if (allRestaurants === undefined) {
+    return <h1 className="text-2xl flex text-center h-[20vh] justify-center items-center">No Open Restaurant</h1>;
   }
 
+  // console.log(allRestaurants);
   return allRestaurants.length === 0 ? (
     <RestaurantShimmer />
   ) : (
@@ -178,28 +142,21 @@ const Body = () => {
           </div>
         </ul>
       </div>
-      <div className="flex flex-wrap justify-around" data-testid="res-list">
-        {
-          // now lets map the array and get all the restaurants:
-          // conditional rendering
-          allRestaurants.length === 0 ? (
-            <h1>No restaurant</h1>
-          ) : (
-            filterRestaurants.map((restaurant) => {
-              return (
-                <Link
-                  className="min-[1440px]:w-1/4 max-w-xs"
-                  key={restaurant.info.id}
-                  to={`/restaurant/${restaurant.info.id}`}
-                >
-                                    
-                  <RestaurantCard {...restaurant.info} />
-                </Link>
-              );
-            })
-          )
-        }
-        {showloading && <ResShimmer />}
+      <div className="flex flex-wrap justify-evenly" data-testid="res-list">
+        {(filterRestaurants === null
+          ? filterRestaurant
+          : filterRestaurants
+        ).map((restaurant) => {
+          return (
+            <Link
+              className="min-[1440px]:w-1/4 max-w-xs"
+              key={restaurant.info.id}
+              to={`/restaurant/${restaurant.info.id}`}
+            >
+              <RestaurantCard {...restaurant.info} />
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
