@@ -10,9 +10,10 @@ const useRestaurant = (API_URL) => {
   }, []);
 
   async function checkJsonData(json) {
-    for (let i = 0; i < json?.data?.success?.cards.length; i++) {
+    console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle);
+    for (let i = 0; i < json?.data?.cards.length; i++) {
       const restaurantData =
-        json?.data?.success?.cards[i]?.gridWidget?.gridElements?.infoWithStyle
+        json?.data?.cards[i]?.card?.card?.gridElements?.infoWithStyle
           .restaurants;
       if (restaurantData !== undefined) {
         setOpenRestaurant(restaurantData?.length);
