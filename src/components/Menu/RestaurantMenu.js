@@ -14,17 +14,16 @@ const RestaurantMenu = () => {
 
   async function getRestaurantMenu() {
     const data = await fetch(
-      `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=30.351793&lng=78.0095493&restaurantId=${resId}&catalog_qa=undefined&submitAction=ENTER`
+      `https://corsproxy.org/?https%3A%2F%2Fwww.swiggy.com%2Fdapi%2Fmenu%2Fpl%3Fpage-type%3DREGULAR_MENU%26complete-menu%3Dtrue%26lat%3D30.351793%26lng%3D78.0095493%26restaurantId%3D${resId}%26catalog_qa%3Dundefined%26submitAction%3DENTER`
     );
+
     const json = await data.json();
     const menus = json?.data?.cards?.find((card) => card.groupedCard)
-    ?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-    console.log(menus);
+      ?.groupedCard?.cardGroupMap?.REGULAR?.cards;
 
-    // groupedCard?.cardGroupMap?.REGULAR?.cards;
     const menuWithTitles = menus
-      .filter((menu) => menu.card.card.title)
-      .map((menu) => menu.card.card);
+      .filter((menu) => menu?.card?.card?.title)
+      .map((menu) => menu?.card?.card);
 
     setRestaurantMenu(menuWithTitles);
     setRestaurantInfo(json?.data?.cards[0]?.card?.card?.info);

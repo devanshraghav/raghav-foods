@@ -10,7 +10,6 @@ const useRestaurant = (API_URL) => {
   }, []);
 
   async function checkJsonData(json) {
-    console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle);
     for (let i = 0; i < json?.data?.cards.length; i++) {
       const restaurantData =
         json?.data?.cards[i]?.card?.card?.gridElements?.infoWithStyle
