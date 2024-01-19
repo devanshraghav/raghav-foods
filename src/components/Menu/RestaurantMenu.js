@@ -11,19 +11,22 @@ const RestaurantMenu = () => {
   useEffect(() => {
     getRestaurantMenu();
   }, []);
-  
+
   async function getRestaurantMenu() {
     const data = await fetch(
-      `https://corsproxy.io/?https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=30.351793&lng=78.0095493&restaurantId=${resId}&submitAction=ENTER`
+      `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=30.351793&lng=78.0095493&restaurantId=${resId}&submitAction=ENTER`
     );
     const json = await data.json();
     const menus = json?.data?.cards?.find((card) => card.groupedCard)
       ?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+
+    // groupedCard?.cardGroupMap?.REGULAR?.cards;
     const menuWithTitles = menus
       .filter((menu) => menu.card.card.title)
       .map((menu) => menu.card.card);
+
     setRestaurantMenu(menuWithTitles);
-    setRestaurantInfo(json?.data?.cards[0]?.card?.card?.info);
+    setRestaurantInfo(json?.data?.cards[2]?.card?.card?.info);
   }
 
   // dispatch(addMenu({restaurantMenu,restaurantInfo}));

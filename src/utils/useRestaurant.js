@@ -1,6 +1,6 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const useRestaurant = (API_URL) =>{
+const useRestaurant = (API_URL) => {
   const [allRestaurants, setAllRestaurant] = useState([]);
   const [filterRestaurants, setFilterRestaurants] = useState([]);
   const [openRestaurant, setOpenRestaurant] = useState();
@@ -9,6 +9,17 @@ const useRestaurant = (API_URL) =>{
     getAllRestaurant();
   }, []);
 
+  async function checkJsonData(json) {
+    for (let i = 0; i < json?.data?.success?.cards.length; i++) {
+      const restaurantData =
+        json?.data?.success?.cards[i]?.gridWidget?.gridElements?.infoWithStyle
+          .restaurants;
+      if (restaurantData !== undefined) {
+        setOpenRestaurant(restaurantData?.length);
+        return restaurantData;
+      }
+    }
+  }
   async function getAllRestaurant() {
     try {
       const data = await fetch(API_URL);
@@ -18,20 +29,7 @@ const useRestaurant = (API_URL) =>{
         throw new Error(err);
       } else {
         const json = await data.json();
-        async function checkJsonData(json) {
-          for (let i = 0; i < json?.data?.cards.length; i++) {
-            const restaurantData =
-              json?.data?.cards[i]?.card?.card?.gridElements?.infoWithStyle
-                .restaurants;
 
-            if (restaurantData !== undefined) {
-              setOpenRestaurant(
-                json.data?.cards[i]?.card?.card?.restaurantCount
-              );
-              return restaurantData;
-            }
-          }
-        }
         const restaurant = await checkJsonData(json);
 
         setAllRestaurant(restaurant);
@@ -42,7 +40,7 @@ const useRestaurant = (API_URL) =>{
     }
   }
 
-  return [allRestaurants,filterRestaurants,openRestaurant];
-}
+  return [allRestaurants, filterRestaurants, openRestaurant];
+};
 
 export default useRestaurant;

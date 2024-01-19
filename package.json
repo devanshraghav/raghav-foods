@@ -1,6 +1,7 @@
 {
   "name": "raghav-foods",
   "version": "1.0.0",
+  "proxy": "https://www.swiggy.com/mapi/homepage/getCards?lat=30.3164945&lng=78.03219179999999",
   "description": "This project will be made during the learning sessions from namaste-react course",
   "scripts": {
     "start": "parcel index.html",
