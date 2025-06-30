@@ -20,10 +20,10 @@ const ItemQuantityButton = ({ data }) => {
     };
     dispatch(additem({ newItem, quantity }));
   };
-  const increment = (data, quantity) => {
+  const increment = (data) => {
     dispatch(incrementQuantity(data));
   };
-  const decrement = (data, quantity) => {
+  const decrement = (data) => {
     dispatch(decrementQuantity(data));
   };
 
@@ -47,7 +47,7 @@ const ItemQuantityButton = ({ data }) => {
       ) : (
         <div className="flex shadow-lg rounded-md p-1">
           <button
-            onClick={() => decrement(data.id, 1)}
+            onClick={() => decrement(data.id)}
             className="w-1/3  font-semibold  hover:bg-gray-50"
           >
             -
@@ -57,7 +57,7 @@ const ItemQuantityButton = ({ data }) => {
             {index > -1 ? cartItems[index] && cartItems[index].quantity : 0}
           </h1>
           <button
-            onClick={() => increment(data.id, 1)}
+            onClick={() => increment(data.id)}
             className="w-1/3 font-semibold hover:bg-gray-50"
           >
             +
