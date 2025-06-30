@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MenuType from "./MenuType";
 import RestaurantMenuShimmer from "../../Shimmer/RestaurantMenuShimmer";
+import { MENU_API_URL } from "../../constants";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
@@ -13,9 +14,7 @@ const RestaurantMenu = () => {
   }, []);
 
   async function getRestaurantMenu() {
-    const data = await fetch(
-      `https://corsproxy.org/?https%3A%2F%2Fwww.swiggy.com%2Fdapi%2Fmenu%2Fpl%3Fpage-type%3DREGULAR_MENU%26complete-menu%3Dtrue%26lat%3D30.351793%26lng%3D78.0095493%26restaurantId%3D${resId}%26catalog_qa%3Dundefined%26submitAction%3DENTER`
-    );
+    const data = await fetch(MENU_API_URL + resId);
 
     const json = await data.json();
     const menus = json?.data?.cards?.find((card) => card.groupedCard)
@@ -26,7 +25,7 @@ const RestaurantMenu = () => {
       .map((menu) => menu?.card?.card);
 
     setRestaurantMenu(menuWithTitles);
-    setRestaurantInfo(json?.data?.cards[0]?.card?.card?.info);
+    setRestaurantInfo(json?.data?.cards[2]?.card?.card?.info);
   }
 
   // dispatch(addMenu({restaurantMenu,restaurantInfo}));
