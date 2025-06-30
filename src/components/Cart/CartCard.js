@@ -1,4 +1,7 @@
-import { incrementQuantity, decrementQuantity } from "../../utils/Redux/cartSlice";
+import {
+  incrementQuantity,
+  decrementQuantity,
+} from "../../utils/Redux/cartSlice";
 import { useDispatch } from "react-redux";
 
 import { Image_CDN_Url } from "../../constants";
@@ -16,11 +19,18 @@ const CartCard = ({ data }) => {
       <div className="flex justify-between my-4">
         <div className="max-[425px]:block flex gap-2">
           <div className="w-32 border border-black">
-            <img className="w-full" src={Image_CDN_Url + data.newItem.imageId} />
+            <img
+              className="w-full"
+              src={Image_CDN_Url + data.newItem.imageId}
+            />
           </div>
           <div className="max-[768px]:w-44">
             <h1 className="px-2">{data.newItem.name}</h1>
-            <h1 className="px-2">{data.newItem.price / 100}</h1>
+            <h1 className="px-2">
+              {(data.newItem?.price
+                ? data.newItem.price
+                : data.newItem.defaultPrice) / 100}
+            </h1>
           </div>
         </div>
 
@@ -45,7 +55,11 @@ const CartCard = ({ data }) => {
             </button>
           </div>
           <h1 className="text-center pr-2 my-2">
-            {(data.quantity * data.newItem.price) / 100}
+            {(data.quantity *
+              (data.newItem?.price
+                ? data.newItem.price
+                : data.newItem.defaultPrice)) /
+              100}
           </h1>
         </div>
       </div>
