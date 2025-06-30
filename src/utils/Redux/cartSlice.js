@@ -12,7 +12,10 @@ const cartSlice = createSlice({
     additem: (state, action) => {
       if (state.items.length === 0) {
         state.items.push(action.payload);
-        state.totalPrice += action.payload.newItem.price/100;
+        state.totalPrice +=
+          (action.payload.newItem.price
+            ? action.payload.newItem?.price
+            : action.payload.newItem.defaultPrice) / 100;
       } else {
         const existingItem = state.items.find(
           (item) => item.newItem.id === action.payload.newItem.id
@@ -21,7 +24,10 @@ const cartSlice = createSlice({
           existingItem.quantity += 1;
         } else {
           state.items.push(action.payload);
-          state.totalPrice += action.payload.newItem.price/100;
+          state.totalPrice +=
+            (action.payload.newItem.price
+              ? action.payload.newItem?.price
+              : action.payload.newItem.defaultPrice) / 100;
         }
       }
     },
@@ -30,7 +36,10 @@ const cartSlice = createSlice({
         (item) => item.newItem.id === action.payload
       );
       existingItem.quantity += 1;
-      state.totalPrice += existingItem.newItem.price/100;
+      state.totalPrice +=
+        (existingItem.newItem.price
+          ? existingItem.newItem?.price
+          : existingItem.newItem.defaultPrice) / 100;
     },
     decrementQuantity: (state, action) => {
       const existingItem = state.items.find(
@@ -40,11 +49,17 @@ const cartSlice = createSlice({
         const remove = state.items.filter(
           (item) => item.newItem.id !== action.payload
         );
-        state.totalPrice -= existingItem.newItem.price/100;
+        state.totalPrice -=
+          (existingItem.newItem.price
+            ? existingItem.newItem?.price
+            : existingItem.newItem.defaultPrice) / 100;
         state.items = remove;
       } else {
         existingItem.quantity -= 1;
-        state.totalPrice -= existingItem.newItem.price/100;
+        state.totalPrice -=
+          (existingItem.newItem.price
+            ? existingItem.newItem?.price
+            : existingItem.newItem.defaultPrice) / 100;
       }
     },
     removeItem: (state, action) => {
@@ -55,7 +70,7 @@ const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.items = [];
-      state.totalPrice= 0;
+      state.totalPrice = 0;
     },
   },
 });
